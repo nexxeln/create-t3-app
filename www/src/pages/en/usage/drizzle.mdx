@@ -9,6 +9,31 @@ isMdx: true
 import Callout from "../../../components/docs/callout.tsx";
 
 <Callout type="info">
-  The `drizzle` option is a new addition and no docs have yet been written. Contributions are welcome!
-
+  The `drizzle` option is a new addition and only a small subset of the docs have been written. Contributions are welcome!
 </Callout>
+
+## Configure PlanetScale 
+
+### Setup database credentials in .env 
+
+1. Generate a new username + password & select "connect with Prisma"
+2. Copy the `DATABASE_URL` (which looks like: `DATABASE_URL='mysql://<user>:<pass>@<host>/<db-name>?sslaccept=strict'
+`) and paste it into your `.env`
+3. Replace `?sslaccept=strict` with `ssl={"rejectUnauthorized":true}`
+
+### Update package.json `db*:` generate script 
+
+1. Replace `:psql` with `:mysql`. 
+
+### Update drizzle.config.ts
+
+1. Use the mysql2 driver: `driver: "mysql2",`
+
+### Run migrations
+
+1. Generate the migrations using `yarn db:generate`
+2. Push them to PlanetScale using `yarn db:push`
+
+#### Seeing a timeout error? 
+
+1. Are you on a VPN? This may be disrupting the connection.
