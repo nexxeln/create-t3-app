@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.38.2
+
+### Patch Changes
+
+- [#2034](https://github.com/t3-oss/create-t3-app/pull/2034) [`9310dc5aa9f09c6b2b998b60146642bcbfaef699`](https://github.com/t3-oss/create-t3-app/commit/9310dc5aa9f09c6b2b998b60146642bcbfaef699) Thanks [@programming-with-ia](https://github.com/programming-with-ia)! - fix: cli cancel not working
+
+- [#2044](https://github.com/t3-oss/create-t3-app/pull/2044) [`cd4cf334e786191f36d699dd9ecdca20903d23f9`](https://github.com/t3-oss/create-t3-app/commit/cd4cf334e786191f36d699dd9ecdca20903d23f9) Thanks [@ImBIOS](https://github.com/ImBIOS)! - fix: simplify session user check in protected procedures
+
+- [#2038](https://github.com/t3-oss/create-t3-app/pull/2038) [`d0a710a65095bc3145a92f13970937af625cb140`](https://github.com/t3-oss/create-t3-app/commit/d0a710a65095bc3145a92f13970937af625cb140) Thanks [@acharlop](https://github.com/acharlop)! - start-database.sh script gets DB_NAME and DB_CONTAINER_NAME based off of DATABASE_URL in .env
+
 ## 7.38.1
 
 ### Patch Changes
