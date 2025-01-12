@@ -9,22 +9,15 @@ import { addPackageScript } from "~/utils/addPackageScript.js";
 import { type AvailableDependencies } from "./dependencyVersionMap.js";
 
 // Also installs prettier
-export const dynamicEslintInstaller: Installer = ({ projectDir, packages }) => {
+export const mixedBiomeInstaller: Installer = ({ projectDir, packages }) => {
   const devPackages: AvailableDependencies[] = [
-    "prettier",
+    "@biomejs/biome",
     "eslint",
     "eslint-config-next",
     "@types/eslint",
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
   ];
-
-  if (packages?.tailwind.inUse) {
-    devPackages.push("prettier-plugin-tailwindcss");
-  }
-  if (packages?.drizzle.inUse) {
-    devPackages.push("eslint-plugin-drizzle");
-  }
 
   addPackageDependency({
     projectDir,
@@ -33,16 +26,13 @@ export const dynamicEslintInstaller: Installer = ({ projectDir, packages }) => {
   });
   const extrasDir = path.join(PKG_ROOT, "template/extras");
 
-  // Prettier
-  let prettierSrc: string;
-  if (packages?.tailwind.inUse) {
-    prettierSrc = path.join(extrasDir, "config/_tailwind.prettier.config.js");
-  } else {
-    prettierSrc = path.join(extrasDir, "config/_prettier.config.js");
-  }
-  const prettierDest = path.join(projectDir, "prettier.config.js");
+  // Biome
 
-  fs.copySync(prettierSrc, prettierDest);
+  const biomeSrc = path.join(extrasDir, "config/eslintBiome.json");
+
+  const biomeDest = path.join(projectDir, "biome.jsonc");
+
+  fs.copySync(biomeSrc, biomeDest);
 
   addPackageScript({
     projectDir,
@@ -50,8 +40,8 @@ export const dynamicEslintInstaller: Installer = ({ projectDir, packages }) => {
       lint: "next lint",
       "lint:fix": "next lint --fix",
       check: "next lint && tsc --noEmit",
-      "format:write": 'prettier --write "**/*.{ts,tsx,js,jsx,mdx}" --cache',
-      "format:check": 'prettier --check "**/*.{ts,tsx,js,jsx,mdx}" --cache',
+      "format:write": "biome format --write .",
+      "format:check": "biome format .",
     },
   });
 
