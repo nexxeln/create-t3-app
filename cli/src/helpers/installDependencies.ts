@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { execa, type StdioOption } from "execa";
+import { execa, type StdoutStderrOption } from "execa";
 import ora, { type Ora } from "ora";
 
 import {
@@ -13,7 +13,7 @@ const execWithSpinner = async (
   pkgManager: PackageManager,
   options: {
     args?: string[];
-    stdout?: StdioOption;
+    stdout?: StdoutStderrOption;
     onDataHandle?: (spinner: Ora) => (data: Buffer) => void;
   }
 ) => {
@@ -55,7 +55,7 @@ const runInstallCommand = async (
 
           if (text.includes("Progress")) {
             spinner.text = text.includes("|")
-              ? text.split(" | ")[1] ?? ""
+              ? (text.split(" | ")[1] ?? "")
               : text;
           }
         },

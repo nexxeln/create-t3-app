@@ -2,7 +2,7 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { sql } from "drizzle-orm";
-import { index, int, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
+import { index, sqliteTableCreator } from "drizzle-orm/sqlite-core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -14,16 +14,15 @@ export const createTable = sqliteTableCreator((name) => `project1_${name}`);
 
 export const posts = createTable(
   "post",
-  {
-    id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-    name: text("name", { length: 256 }),
-    createdAt: int("created_at", { mode: "timestamp" })
+  (t) => ({
+    id: t.integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
+    name: t.text({ length: 256 }),
+    createdAt: t
+      .integer({ mode: "timestamp" })
       .default(sql`(unixepoch())`)
       .notNull(),
-    updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-      () => new Date()
-    ),
-  },
+    updatedAt: t.integer({ mode: "timestamp" }).$onUpdate(() => new Date()),
+  }),
   (example) => ({
     nameIndex: index("name_idx").on(example.name),
   })
