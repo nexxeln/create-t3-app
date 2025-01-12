@@ -17,11 +17,10 @@ import DownloadButton from "./download-button";
 import { Files } from "./files";
 import HowToApplyDiff from "./how-to-apply-diff.mdx";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
 }) {
+  const params = await props.params;
   const versionsAndFeatures = extractVersionsAndFeatures(params.slug);
   if (!versionsAndFeatures) notFound();
   const diff = await getDiffFromGithub(versionsAndFeatures).catch(notFound);
@@ -55,13 +54,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { slug: string };
-  searchParams: Record<string, string>;
+export default async function Page(props: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string>>;
 }) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   if (!params?.slug) notFound();
   const versionsAndFeatures = extractVersionsAndFeatures(params.slug);
   const viewType = searchParams.viewType === "unified" ? "unified" : "split";

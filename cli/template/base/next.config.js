@@ -16,8 +16,7 @@ const config = {
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
-  },
-  transpilePackages: ["geist"],
+  }
 };
 
 export default config;
