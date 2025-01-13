@@ -2,11 +2,12 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel/serverless";
+import { type RehypePlugins } from "astro";
 import { defineConfig } from "astro/config";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
-import remarkCodeTitles from "remark-code-titles";
+import remarkCodeTitle from "remark-code-title";
 
 /** @link https://astro.build/config */
 export default defineConfig({
@@ -14,7 +15,7 @@ export default defineConfig({
   output: "server",
   adapter: vercel(),
   markdown: {
-    remarkPlugins: [remarkCodeTitles],
+    remarkPlugins: [remarkCodeTitle],
     rehypePlugins: [
       [
         rehypeExternalLinks,
@@ -38,7 +39,7 @@ export default defineConfig({
           behavior: "wrap",
         },
       ],
-    ],
+    ] as RehypePlugins,
     shikiConfig: {
       theme: "rose-pine",
       wrap: true,

@@ -22,9 +22,9 @@
     "typescript"
   ],
   "engines": {
-    "node": ">=18.17.0"
+    "node": ">=20.18.0"
   },
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.12.2",
   "scripts": {
     "typecheck": "turbo typecheck",
     "build:cli": "turbo --filter=create-t3-app build",
@@ -46,26 +46,20 @@
   },
   "dependencies": {
     "@changesets/changelog-github": "^0.4.8",
-    "@changesets/cli": "^2.27.3",
+    "@changesets/cli": "^2.27.9",
     "@manypkg/cli": "^0.20.0",
-    "@total-typescript/ts-reset": "^0.3.7",
-    "@types/eslint": "^8.56.10",
-    "@types/node": "^20.14.10",
-    "@typescript-eslint/eslint-plugin": "^8.1.0",
-    "@typescript-eslint/parser": "^8.1.0",
-    "eslint": "^8.57.0",
+    "@total-typescript/ts-reset": "^0.6.1",
+    "@types/node": "^20.17.1",
+    "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-isaacscript": "^2.6.7",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "prettier": "^3.3.2",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-isaacscript": "^3.12.2",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "prettier": "^3.3.3",
     "turbo": "1.13.3-canary.3",
-    "typescript": "^5.5.3"
-  },
-  "resolutions": {
-    "@typescript-eslint/eslint-plugin": "8.1.0",
-    "@typescript-eslint/parser": "8.1.0"
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.11.0"
   }
 }

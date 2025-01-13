@@ -55,7 +55,7 @@ const runInstallCommand = async (
 
           if (text.includes("Progress")) {
             spinner.text = text.includes("|")
-              ? text.split(" | ")[1] ?? ""
+              ? (text.split(" | ")[1] ?? "")
               : text;
           }
         },

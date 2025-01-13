@@ -1,5 +1,5 @@
 {
-  "include": [".eslintrc.cjs", "prettier.config.mjs"],
+  "include": ["eslint.config.js", "prettier.config.js"],
   "compilerOptions": {
     /* LANGUAGE COMPILATION OPTIONS */
     "target": "ES2020",

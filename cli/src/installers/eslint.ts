@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs-extra";
+import { format } from "prettier";
 
 import { _initialConfig } from "~/../template/extras/config/_eslint.js";
 import { type Installer } from "~/installers/index.js";
@@ -7,27 +8,55 @@ import { type Installer } from "~/installers/index.js";
 export const dynamicEslintInstaller: Installer = ({ projectDir, packages }) => {
   const usingDrizzle = !!packages?.drizzle?.inUse;
 
-  const eslintConfig = getEslintConfig({ usingDrizzle });
+  const imports = getImports(usingDrizzle);
 
-  // Convert config from _eslint.config.json to .eslintrc.cjs
-  const eslintrcFileContents = [
-    '/** @type {import("eslint").Linter.Config} */',
-    `const config = ${JSON.stringify(eslintConfig, null, 2)}`,
-    "module.exports = config;",
+  const eslintConfig = getEslintConfig(usingDrizzle);
+  const stringifiedConfig = JSON.stringify(eslintConfig, null, 2).replace(
+    /"%%|%%"/g,
+    ""
+  );
+
+  // Convert config from _eslint.js to eslint.config.js
+  const eslintConfigFileContents = [
+    ...imports,
+    "",
+    "export default tseslint.config(",
+    stringifiedConfig,
+    ");",
   ].join("\n");
 
-  const eslintConfigDest = path.join(projectDir, ".eslintrc.cjs");
-  fs.writeFileSync(eslintConfigDest, eslintrcFileContents, "utf-8");
+  format(eslintConfigFileContents, { parser: "typescript" })
+    .then((content) => {
+      const eslintConfigDest = path.join(projectDir, "eslint.config.js");
+      fs.writeFileSync(eslintConfigDest, content, "utf-8");
+    })
+    .catch((error) => {
+      console.error("Invalid 'eslint.config.js'.", error);
+    });
 };
 
-const getEslintConfig = ({ usingDrizzle }: { usingDrizzle: boolean }) => {
+function getImports(usingDrizzle: boolean) {
+  const imports = [
+    'import nextPlugin from "@next/eslint-plugin-next"',
+    'import tseslint from "typescript-eslint"',
+  ];
+
+  if (usingDrizzle) {
+    imports.unshift('import drizzlePlugin from "eslint-plugin-drizzle"');
+  }
+
+  return imports;
+}
+
+function getEslintConfig(usingDrizzle: boolean) {
   const eslintConfig = _initialConfig;
 
   if (usingDrizzle) {
-    eslintConfig.plugins = [...(eslintConfig.plugins ?? []), "drizzle"];
+    Object.assign(eslintConfig.plugins, {
+      drizzle: "%%drizzlePlugin%%",
+    });
 
-    eslintConfig.rules = {
-      ...eslintConfig.rules,
+    Object.assign(eslintConfig.rules, {
       "drizzle/enforce-delete-with-where": [
         "error",
         { drizzleObjectName: ["db", "ctx.db"] },
@@ -36,7 +65,8 @@ const getEslintConfig = ({ usingDrizzle }: { usingDrizzle: boolean }) => {
         "error",
         { drizzleObjectName: ["db", "ctx.db"] },
       ],
-    };
+    });
   }
+
   return eslintConfig;
-};
+}

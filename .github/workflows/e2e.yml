@@ -71,7 +71,7 @@ jobs:
 
     name: "Build and Start T3 App with Bun"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -81,7 +81,7 @@ jobs:
 
       # Then, run the CLI and build the generated app with Bun
       # Let's just build a full app with Bun, we don't need the matrix here
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 

@@ -7,11 +7,10 @@
   },
   "include": [
     "src",
-    "astro.config.mjs",
-    ".eslintrc.cjs",
+    "astro.config.ts",
+    "eslint.config.js",
     "**/*.js",
     "**/*.cjs",
-    "**/*.mjs",
     "../reset.d.ts",
     "./tailwind.config.ts"
   ]

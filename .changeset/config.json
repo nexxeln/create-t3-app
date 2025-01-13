@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@2.1.1/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
   "changelog": [
     "@changesets/changelog-github",
     { "repo": "t3-oss/create-t3-app" }

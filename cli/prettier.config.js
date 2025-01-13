@@ -1,4 +1,4 @@
-import baseConfig from "../prettier.config.mjs";
+import baseConfig from "../prettier.config.js";
 
 /**
  * @type {import('prettier').Config & import('prettier-plugin-tailwindcss').PluginOptions &
@@ -6,21 +6,13 @@ import baseConfig from "../prettier.config.mjs";
  */
 const config = {
   ...baseConfig,
+  arrowParens: "always",
   plugins: [
     "@ianvs/prettier-plugin-sort-imports",
-    "prettier-plugin-astro",
-    "prettier-plugin-tailwindcss", // MUST come last
+    "prettier-plugin-tailwindcss",
   ],
-  overrides: [
-    {
-      files: "*.astro",
-      options: {
-        parser: "astro",
-      },
-    },
-  ],
-  astroAllowShorthand: false,
-  tailwindConfig: "./tailwind.config.ts",
+  tailwindConfig: "./template/extras/config/tailwind.config.ts",
+  trailingComma: "es5",
   importOrder: ["<THIRD_PARTY_MODULES>", "", "^~/", "^[.][.]/", "^[.]/"],
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
   importOrderTypeScriptVersion: "4.4.0",

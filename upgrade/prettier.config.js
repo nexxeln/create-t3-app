@@ -1,4 +1,4 @@
-import baseConfig from "../prettier.config.mjs";
+import baseConfig from "../prettier.config.js";
 
 /**
  * @type {import('prettier').Config & import('prettier-plugin-tailwindcss').PluginOptions &
