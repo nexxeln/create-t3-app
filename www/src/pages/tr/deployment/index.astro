@@ -1,0 +1,24 @@
+---
+import Layout from "../../../layouts/docs.astro";
+import IndexPage from "../../../components/docs/indexPage.astro";
+import { Frontmatter, SIDEBAR } from "../../../config";
+import { getLanguageFromURL } from "../../../languages";
+
+const frontmatter: Frontmatter = {
+  title: "Dağıtım",
+  layout: "docs",
+  description: "T3 projeni nasıl üretime dağıtacağını öğren.",
+};
+
+const lang = getLanguageFromURL(Astro.url.pathname);
+const sidebarEntries = SIDEBAR[lang]["Deployment"]!;
+const files = await Astro.glob("./*.{md,mdx,astro}");
+---
+
+<Layout frontmatter={frontmatter} headings={[]}>
+  <IndexPage
+    frontmatter={frontmatter}
+    sidebarEntries={sidebarEntries}
+    files={files}
+  />
+</Layout>

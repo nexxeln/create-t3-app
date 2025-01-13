@@ -38,6 +38,7 @@ export const KNOWN_LANGUAGES = {
   pl: "Polski",
   uk: "Українська",
   "zh-hans": "简体中文",
+  tr: "Türkçe",
 } as const;
 export type KnownLanguageCode = keyof typeof KNOWN_LANGUAGES;
 
@@ -412,6 +413,35 @@ export const SIDEBAR: Sidebar = {
       { text: "Docker", link: "zh-hans/deployment/docker" },
     ],
   },
+  tr: {
+    "Create T3 App": [
+      { text: "Giriş", link: "tr/introduction" },
+      { text: "Neden CT3A?", link: "tr/why" },
+      { text: "Kurulum", link: "tr/installation" },
+      { text: "Klasör Yapısı", link: "tr/folder-structure" },
+      { text: "S. S. S.", link: "tr/faq" },
+      { text: "T3 Koleksiyonu", link: "tr/t3-collection" },
+      { text: "Diğer Öneriler", link: "tr/other-recs" },
+    ],
+    Usage: [
+      { text: "İlk Adımlar", link: "tr/usage/first-steps" },
+      { text: "Next.js", link: "tr/usage/next-js" },
+      { text: "TypeScript", link: "tr/usage/typescript" },
+      { text: "tRPC", link: "tr/usage/trpc" },
+      { text: "Prisma", link: "tr/usage/prisma" },
+      { text: "NextAuth.js", link: "tr/usage/next-auth" },
+      {
+        text: "Ortam Değişkenleri",
+        link: "tr/usage/env-variables",
+      },
+      { text: "Tailwind CSS", link: "tr/usage/tailwind" },
+    ],
+    Deployment: [
+      { text: "Vercel", link: "tr/deployment/vercel" },
+      { text: "Netlify", link: "tr/deployment/netlify" },
+      { text: "Docker", link: "tr/deployment/docker" },
+    ],
+  },
 };
 
 export const SIDEBAR_HEADER_MAP: Record<
@@ -473,5 +503,10 @@ export const SIDEBAR_HEADER_MAP: Record<
     "Create T3 App": "Create T3 App",
     Usage: "用法",
     Deployment: "部署",
+  },
+  tr: {
+    "Create T3 App": "Create T3 App",
+    Usage: "Kullanım",
+    Deployment: "Dağıtım",
   },
 };

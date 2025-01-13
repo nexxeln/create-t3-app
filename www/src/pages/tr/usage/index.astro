@@ -1,0 +1,24 @@
+---
+import Layout from "../../../layouts/docs.astro";
+import IndexPage from "../../../components/docs/indexPage.astro";
+import { Frontmatter, SIDEBAR } from "../../../config";
+import { getLanguageFromURL } from "../../../languages";
+
+const frontmatter: Frontmatter = {
+  title: "Usage",
+  layout: "docs",
+  description: "Learn how to use the different technology from the T3 Stack.",
+};
+
+const lang = getLanguageFromURL(Astro.url.pathname);
+const sidebarEntries = SIDEBAR[lang]["Usage"]!;
+const files = await Astro.glob("./*.{md,mdx,astro}");
+---
+
+<Layout frontmatter={frontmatter} headings={[]}>
+  <IndexPage
+    frontmatter={frontmatter}
+    sidebarEntries={sidebarEntries}
+    files={files}
+  />
+</Layout>
