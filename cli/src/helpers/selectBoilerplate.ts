@@ -63,6 +63,18 @@ export const selectLayoutFile = ({
   fs.copySync(appSrc, appDest);
 };
 
+// Adds the .well-known/t3app folder to the project
+export const selectWellknown3AppFiles = ({
+  projectDir,
+}: SelectBoilerplateProps) => {
+  const appSrc = path.join(
+    PKG_ROOT,
+    "template/extras/src/app/.well-known/t3app"
+  );
+  const appDest = path.join(projectDir, "src/app/.well-known/t3app");
+  fs.copySync(appSrc, appDest);
+};
+
 // This selects the proper index.tsx to be used that showcases the chosen tech
 export const selectIndexFile = ({
   projectDir,

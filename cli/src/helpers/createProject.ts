@@ -9,6 +9,7 @@ import {
   selectIndexFile,
   selectLayoutFile,
   selectPageFile,
+  selectWellknown3AppFiles,
 } from "~/helpers/selectBoilerplate.js";
 import {
   type DatabaseProvider,
@@ -69,6 +70,7 @@ export const createProject = async ({
     );
 
     selectLayoutFile({ projectDir, packages });
+    selectWellknown3AppFiles({ projectDir, packages });
     selectPageFile({ projectDir, packages });
   } else {
     selectAppFile({ projectDir, packages });
