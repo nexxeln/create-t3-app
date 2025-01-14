@@ -1,0 +1,72 @@
+---
+title: Instalasi
+description: Instruksi instalasi untuk Create T3 App
+layout: ../../layouts/docs.astro
+lang: id
+isMdx: true
+---
+
+import Callout from "../../components/docs/callout.tsx";
+
+Untuk membuat aplikasi menggunakan `create-t3-app`, jalankan salah satu dari tiga perintah berikut dan jawab pertanyaan dari prompt perintah:
+
+### npm
+
+```bash
+npm create t3-app@latest
+```
+
+### yarn
+
+```bash
+yarn create t3-app
+```
+
+### pnpm
+
+```bash
+pnpm create t3-app@latest
+```
+
+### bun
+
+```bash
+bun create t3-app@latest
+```
+
+Setelah aplikasi Anda telah dibuat, lihat langkah-langkah pertama [di sini](/id/usage/first-steps) untuk memulai aplikasi baru Anda.
+
+## Penggunaan Lanjutan
+
+| Opsi/Flag        | Deskripsi                                                               |
+| ----------------- | ----------------------------------------------------------------------- |
+| `[dir]`           | Sertakan argumen direktori dengan nama untuk proyek                     |
+| `--noGit`         | Katakan secara eksplisit kepada CLI untuk tidak menginisialisasi repo git baru di proyek |
+| `-y`, `--default` | Lewati CLI dan bootstrapping aplikasi t3 baru dengan semua opsi yang dipilih |
+| `--noInstall`     | Hasilkan proyek tanpa menginstal dependensi                               |
+
+## Penggunaan Eksperimental
+
+Untuk CI kami, kami memiliki beberapa flag eksperimental yang memungkinkan Anda membuat aplikasi tanpa prompt. Jika ini berlaku untuk Anda, Anda dapat menggunakan flag-flag ini. Harap dicatat bahwa flag-flag ini bersifat eksperimental dan dapat berubah di masa depan tanpa mengikuti semver versioning.
+
+| Flag         | Deskripsi                         |
+| ------------ | ----------------------------------- |
+| `--CI`       | Beri tahu CLI bahwa Anda berada dalam mode CI  |
+| `--trpc`     | Sertakan tRPC dalam proyek         |
+| `--prisma`   | Sertakan Prisma dalam proyek       |
+| `--nextAuth` | Sertakan NextAuth.js dalam proyek  |
+| `--tailwind` | Sertakan Tailwind CSS dalam proyek |
+
+<Callout type="warning">
+  Jika Anda tidak menyediakan flag `CI`, maka flag-flag lainnya tidak berpengaruh.
+</Callout>
+
+Anda tidak perlu secara eksplisit menolak paket yang tidak Anda inginkan. Namun, jika Anda lebih suka eksplisit, Anda dapat menyampaikan `false`, misalnya `--nextAuth false`.
+
+### Contoh
+
+Berikut ini akan membuat aplikasi T3 dengan tRPC dan Tailwind CSS.
+
+```bash
+pnpm dlx create-t3-app@latest --CI --trpc --tailwind
+```
