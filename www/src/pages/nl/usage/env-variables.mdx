@@ -1,0 +1,147 @@
+---
+title: Omgevingsvariabelen
+description: Aan de slag met Create T3 App
+layout: ../../../layouts/docs.astro
+lang: nl
+isMdx: true
+---
+
+import Callout from "../../../components/docs/callout.tsx";
+
+Create T3 App maakt intern gebruik van zijn eigen package [@t3-oss/env-nextjs](https://env.t3.gg) en van [zod](https://zod.dev) om omgevingsvariabelen zowel tijdens runtime als *buildtime* te valideren door een eenvoudige logica aan te bieden in `src/env.js`.
+
+## env.js
+
+_TDLR; Als je een nieuwe omgevingsvariabele wil toevoegen, moet je er een validator voor toevoegen in `src/env.js` en dan het KV-paar toevoegen in `.env`_
+
+```ts:env.js
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
+
+export const env = createEnv({
+  server: {
+    NODE_ENV: z.enum(["development", "test", "production"]),
+  },
+  client: {
+    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+  },
+  runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
+  },
+});
+```
+
+T3 Env gebruikt de functie `createEnv` om het schema te maken en zowel client- als server-side-omgevingsvariabelen to valideren.
+
+<Callout type="info">
+    Voor meer informatie over hoe `createEnv` intern werkt, bekijk je de [T3 Env](https://env.t3.gg/docs/introduction) docs.
+</Callout>
+
+## Omgevingsvariabelen Gebruiken
+
+Wanneer je gebruik wilt maken van je omgevingsvariabelen, kun je ze importeren vanuit het gemaakte `env.js` en ze gebruiken zoals je dat doorgaands ook zou doen. Als je op de client gebruik probeert te maken van een server-side omgevingsvariabele, zal je een runtime error ontvangen.
+
+```ts:pages/api/hello.ts
+import { env } from "../../env.js";
+
+// `env` is volledig typesafe en biedt autocompletion
+const dbUrl = env.DATABASE_URL;
+```
+
+```ts:pages/index.tsx
+import { env } from "../env.js";
+
+// ❌ Dit zal een runtime error opleveren
+const dbUrl = env.DATABASE_URL;
+
+// ✅ Dit is prima
+const wsKey = env.NEXT_PUBLIC_WS_KEY;
+```
+
+## .env.example
+
+Omdat het standaard `.env`-bestand niet wordt vastgelegd in version contol, hebben we ook een `.env.example`-bestand meegeleverd, waarin je optioneel een kopie van je `.env`-bestand kan bewaren met alle secrets verwijderd. Dit is niet verplicht, maar we raden aan om het voorbeeld regelmatig bij te werken om het zo makkelijk mogelijk te maken voor bijdragers om aan de slag te gaan met hun omgeving.
+
+Sommige frameworks en buildtools, zoals Next.js, stellen voor om je secrets in een `.env.local`-bestand te bewaren en `.env`-bestanden naar je project vast te leggen. Dit wordt afgeraden, omdat dit het te eenvoudig kan maken om per ongeluk secrets naar je project vast te leggen. In plaats daarvan raden wij aan dat je secrets in `.env` bewaart en je `.env`-bestand in je `.gitignore` houdt en alleen `.env.example`-bestanden naar je project vastlegt.
+
+## Omgevingsvariabelen Toevoegen
+
+Om je ervan te verzekeren dat je build nooit voltooid zonder de vereiste omgevingsvariabelen, moet je nieuwe omgevingsvariabelen in **twee** plekken vastleggen:
+
+📄 `.env`: Voer je omgevingsvariabele in zoals je dat normaliter ook in een `.env`-bestand zou doen, bijv. `SLEUTEL=WAARDE`
+
+📄 `env.js`: Voeg de gepaste validatielogica voor de omgevingsvariabelen toe door voor ze allemaal in `createEnv` een Zod-schema te definiëren, bijv. `SLEUTEL: z.string()`. Zorg er daarnaast voor dat je ze vernietigt in de runtimeEnv optie, bijv: `SLEUTEL: process.env.SLEUTEL`
+
+<Callout type="info">
+    Waarom moet ik de omgevingsvariabele in de `runtimeEnv` vernietigen?
+    Dit komt door de manier waarop Next.js omgevingsvariabelen bundelt in bepaalde runtimes.
+    Door deze handmatig te vernietigen, zorg je ervoor dat de variabele nooit uit de bundle zal worden gehaald.
+</Callout>
+
+Je kan `.env.example` up-to-date houden:
+
+📄 `.env.example`: Voer je omgevingsvariabele in, maar laat de waarde leeg als het een secret is, bijv. `SLEUTEL=WAARDE` of `SLEUTEL=`
+
+### Voorbeeld
+
+_Ik wil mijn Twitter API-Sleutel toevoegen als een server-side omgevingsvariabele_
+
+1. Voeg de omgevingsvariabele toe aan `.env`:
+
+```
+TWITTER_API_SLEUTEL=1234567890
+```
+
+2. Voeg de omgevingsvariabele toe aan `env.js`:
+
+```ts
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
+
+export const env = createEnv({
+  server: {
+    TWITTER_API_SLEUTEL: z.string(),
+  },
+  // ...
+  runtimeEnv: {
+    // ...
+    TWITTER_API_SLEUTEL: process.env.TWITTER_API_SLEUTEL,
+  },
+});
+```
+
+3. _Optioneel:_ Voeg de omgevingsvariabele toe aan `.env.example` en laat het secret weg in de `runtimeEnv`-optie
+
+```bash
+TWITTER_API_SLEUTEL=
+```
+
+## Type Coercion
+
+Alle variabelen die je toevoegt aan `.env` zullen geïmporteerd worden als strings, zelfs als hun waarde bedoeld is om een andere type te vertegenwoordigen. Als je je omgevingsvariabele als een andere type wil gebruiken tijdens runtime, kun je Zod's `coerce` gebruiken om de string om te zetten naar de andere type die je wil. Het zal een error opleveren als het mislukt.
+
+Voeg de variabelen toe aan je `.env`:
+
+```
+EEN_GETAL=123
+EEN_BOOLEAN=true
+```
+
+Valideer ze vervolgens in `env.js`:
+
+```ts
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
+
+export const env = createEnv({
+  server: {
+    EEN_GETAL: z.coerce.number(),
+    EEN_BOOLEAN: z.coerce.boolean(),
+  },
+  // ...
+  runtimeEnv: {
+    EEN_GETAL: process.env.EEN_GETAL,
+    EEN_BOOLEAN: process.env.EEN_BOOLEAN,
+  },
+});
+```

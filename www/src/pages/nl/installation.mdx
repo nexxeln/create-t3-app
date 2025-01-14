@@ -1,0 +1,72 @@
+---
+title: Installation
+description: Installation instructions for Create T3 App
+layout: ../../layouts/docs.astro
+lang: en
+isMdx: true
+---
+
+import Callout from "../../components/docs/callout.tsx";
+
+To scaffold an app using `create-t3-app`, run any of the following commands and answer the command prompt questions:
+
+### npm
+
+```bash
+npm create t3-app@latest
+```
+
+### yarn
+
+```bash
+yarn create t3-app
+```
+
+### pnpm
+
+```bash
+pnpm create t3-app@latest
+```
+
+### bun
+
+```bash
+bun create t3-app@latest
+```
+
+After your app has been scaffolded, check out the [first steps](/en/usage/first-steps) to get started on your new application.
+
+## Advanced usage
+
+| Option/Flag       | Description                                                             |
+| ----------------- | ----------------------------------------------------------------------- |
+| `[dir]`           | Include a directory argument with a name for the project                |
+| `--noGit`         | Explicitly tell the CLI to not initialize a new git repo in the project |
+| `-y`, `--default` | Bypass the CLI and bootstrap a new t3-app with all options selected     |
+| `--noInstall`     | Generate project without installing dependencies                        |
+
+## Experimental usage
+
+For our CI, we have some experimental flags that allow you to scaffold any app without any prompts. If this use case applies to you, you can use these flags. Please note that these flags are experimental and may change in the future without following semver versioning.
+
+| Flag         | Description                         |
+| ------------ | ----------------------------------- |
+| `--CI`       | Let the CLI know you're in CI mode  |
+| `--trpc`     | Include tRPC in the project         |
+| `--prisma`   | Include Prisma in the project       |
+| `--nextAuth` | Include NextAuth.js in the project  |
+| `--tailwind` | Include Tailwind CSS in the project |
+
+<Callout type="warning">
+  If you don't provide the `CI` flag, the rest of these flags have no effect.
+</Callout>
+
+You don't need to explicitly opt-out of the packages you don't want. However, if you prefer to be explicit, you can pass `false`, e.g. `--nextAuth false`.
+
+### Example
+
+The following would scaffold a T3 App with tRPC and Tailwind CSS.
+
+```bash
+pnpm dlx create-t3-app@latest --CI --trpc --tailwind
+```
