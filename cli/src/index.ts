@@ -15,6 +15,7 @@ import { logger } from "~/utils/logger.js";
 import { parseNameAndPath } from "~/utils/parseNameAndPath.js";
 import { renderTitle } from "~/utils/renderTitle.js";
 import { installDependencies } from "./helpers/installDependencies.js";
+import { moveProjectSrc } from "./helpers/moveProjectSrc.js";
 import { getVersion } from "./utils/getT3Version.js";
 import {
   getNpmVersion,
@@ -38,7 +39,7 @@ const main = async () => {
   const {
     appName,
     packages,
-    flags: { noGit, noInstall, importAlias, appRouter },
+    flags: { noGit, noInstall, importAlias, appRouter, srcDir },
     databaseProvider,
   } = await runCli();
 
@@ -75,6 +76,10 @@ const main = async () => {
   fs.writeJSONSync(path.join(projectDir, "package.json"), pkgJson, {
     spaces: 2,
   });
+
+  if (!srcDir) {
+    await moveProjectSrc({ projectDir, packages: usePackages, appRouter });
+  }
 
   // update import alias in any generated files if not using the default
   if (importAlias !== "~/") {

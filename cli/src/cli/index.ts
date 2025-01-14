@@ -20,6 +20,7 @@ interface CliFlags {
   noInstall: boolean;
   default: boolean;
   importAlias: string;
+  srcDir: boolean;
 
   /** @internal Used in CI. */
   CI: boolean;
@@ -52,6 +53,7 @@ const defaultOptions: CliResults = {
   flags: {
     noGit: false,
     noInstall: false,
+    srcDir: false,
     default: false,
     CI: false,
     tailwind: false,
@@ -89,6 +91,11 @@ export const runCli = async (): Promise<CliResults> => {
     .option(
       "-y, --default",
       "Bypass the CLI and use all default options to bootstrap a new t3-app",
+      false
+    )
+    .option(
+      "--srcDir",
+      "Explicitly tell the CLI to create a 'src' directory in the project",
       false
     )
     /** START CI-FLAGS */
@@ -253,6 +260,11 @@ export const runCli = async (): Promise<CliResults> => {
             message: "Will you be using Tailwind CSS for styling?",
           });
         },
+        srcDir: () => {
+          return p.confirm({
+            message: "Would you like to use 'src' directory?",
+          });
+        },
         trpc: () => {
           return p.confirm({
             message: "Would you like to use tRPC?",
@@ -350,6 +362,7 @@ export const runCli = async (): Promise<CliResults> => {
       flags: {
         ...cliResults.flags,
         appRouter: project.appRouter ?? cliResults.flags.appRouter,
+        srcDir: project.srcDir ?? cliResults.flags.srcDir,
         noGit: !project.git || cliResults.flags.noGit,
         noInstall: !project.install || cliResults.flags.noInstall,
         importAlias: project.importAlias ?? cliResults.flags.importAlias,
