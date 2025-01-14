@@ -1,0 +1,253 @@
+---
+title: Struktura projektu (App)
+description: Struktura nowej aplikacji T3 (App)
+layout: ../../layouts/docs.astro
+lang: pl
+isMdx: true
+---
+
+import Diagram from "../../components/docs/folderStructureDiagramApp.astro";
+import Form from "../../components/docs/folderStructureForm.astro";
+
+Wybierz paczkę, aby zobaczyć strukturę folderów nowo utworzonej z nią aplikacji. Poniżej znajdziesz opis każdego elementu.
+<Form />
+
+<Diagram />
+
+<div data-components="prisma">
+
+### `prisma`
+
+Folder `prisma` zawiera plik `schema.prisma`, który używany jest do konfiguracji połączenia z bazą danych i struktury tej bazy. Jest to także miejsce, w którym przechowywać można pliki migracji i/lub skrypty "seedowania" (jeżeli z nich korzystasz). Po więcej informacji, zobacz [korzystanie z Prismy](/pl/usage/prisma).
+
+</div>
+<div>
+
+### `public`
+
+Folder `public` zawiera zasoby statyczne, które "serwowane" są przez serwer webowy. Plik `favicon.ico` jest przykładem jednego z takich zasobów.
+
+</div>
+<div>
+
+### `src/env`
+
+Używany do walidacji zmiennych środowiskowych i definiowania ich typów - zobacz [zmienne środowiskowe](/pl/usage/env-variables).
+
+</div>
+<div>
+
+### `src/app`
+
+Folder `app` zawiera wszystkie strony aplikacji Next.js. Plik `page.tsx` w folderze `/app` zawiera stronę głowną aplikacji. Plik `layout.tsx` jest używany do dostarczania "providerów". Po więcej inforamcji, zobacz [Dokumentacje Next.js]
+
+</div>
+<div data-components="trpc">
+
+#### `src/app/_components/post.tsx`
+
+Plik `post.tsx` jest przykładem komponentu klienta, który wykonuje mutacje TRPC.
+
+</div>
+<div data-components="nextauth">
+
+#### `src/app/api/auth/[...nextauth]/route.ts`
+
+Plik [...nextauth]/route.ts` jest slug routem używanym do uwierzytelniania ("authentication") poprzez NextAuth.js. Pomaga on przetwarzać zapytania o uwierzytelnianie. Po więcej informacji o kolejno NextAuth.js i slug route'ach, zobacz [korzystanie z NextAuth.js](/pl/usage/next-auth) oraz [dokumentację dynamicznych route'ów Next.js](https://nextjs.org/docs/routing/dynamic-routes).
+
+</div>
+<div data-components="trpc">
+
+#### `src/app/api/trpc/[trpc]/route.ts`
+
+Plik `[trpc].ts` to punkt wejścia dla API (tRPC). Pomaga on przetwarzać zapytania wykonane z tRPC. Po więcej informacji o kolejno tRPC i slug route'ach, zobacz [korzystanie z tRPC](/pl/usage/trpc#-pagesapitrpctrpcts) oraz [dokumentację dynamicznych route'ów Next.js](https://nextjs.org/docs/routing/dynamic-routes).
+
+</div>
+<div data-components="trpc prisma nextauth drizzle">
+
+### `src/server`
+
+Folder `server` używany jest do stworzenia wyraźnego podziału między kodem działającym na serwerze, a tym po stronie klienta.
+
+</div>
+<div data-components="nextauth+trpc">
+
+#### `src/server/auth.ts`
+
+Jest to główny punkt wejścia dla systemu uwierzytelniania po stronie serwera. Ustawiamy tutaj [opcje konfiguracji](/pl/usage/next-auth), [dostosowujemy model użytkownika](/pl/usage/next-auth#inclusion-of-userid-on-the-session) oraz zapewniamy narzędzia DX dla uwierzytelniania, takie jak funkcja pobierania sesji użytkownika po stronie serwera. Po więcej informacji, zobacz [korzystanie z NextAuth.js](/pl/usage/next-auth#korzystanie-z-trpc).
+
+</div>
+<div data-components="prisma">
+
+#### `src/server/db.ts`
+
+Plik `db.ts` jest używany do tworzenia instancji klienta Prismy w globalnym zakresie. Po więcej informacji, zobacz [korzystanie z Prismy](/pl/usage/prisma#prisma-client) oraz [polecane korzystanie z Prismy wraz z Next.js](https://www.prisma.io/docs/guides/database/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices).
+
+</div>
+<div data-components="drizzle">
+
+### `src/server/db`
+
+Folder `db` zawiera wszystkie schematy klientu Drizzle. Należy pamiętać że drizzle potrzebuje pliku `drizzle.config.ts` (Zobacz poniżej)
+
+</div>
+<div data-components="drizzle">
+
+#### `src/server/db/index.ts`
+
+Plik `index.ts` jest używany do tworzenia instancji klienta Drizzle w globalnym zakresie. Po więcej informacji, zobacz [korzystanie z Prismy](/pl/usage/drizzle#drizzle-client) oraz [polecane korzystanie z Drizzle wraz z Next.js](https://www.prisma.io/docs/guides/database/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices).
+
+</div>
+<div data-components="drizzle">
+
+#### `src/server/db/schema.ts`
+
+Plik `schema.ts` jest używany do konfiguracji połączenia z bazą danych i struktury tej bazy [Zobacz](usage/drizzle#drizzle-client) oraz [polecane korzystanie z Drizzle wraz z Next.js](https://www.prisma.io/docs/guides/database/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices).
+
+</div>
+<div data-components="trpc">
+
+### `src/server/api`
+
+Folder `api` zawiera kod TRPC po stronei serwera
+
+</div>
+<div data-components="trpc">
+
+#### `src/server/api/routers`
+
+Folder `routers` zawiera wszystkie "sub-routery" tRPC.
+
+</div>
+<div data-components="trpc">
+
+#### `src/server/api/routers/example.ts`
+
+Plik `example.ts` zawiera przykład routera tRPC wykorzystującego funkcję pomocniczą `publicProcedure` do zaprezentowania, jak stworzyć publiczny route tRPC.
+
+Zależnie od wybranych paczek, router ten zawiera więcej lub mniej route'ów, aby najlepiej zaprezentować jego sposób użycia.
+
+</div>
+<div data-components="trpc">
+
+#### `src/server/api/trpc.ts`
+
+Plik `trpc.ts` jest głównym plikiem konfiguracyjnym dla tRPC po stronie serwera. W pliku tym:
+
+1. Definiujemy kontekst używany w zapytaniach tRPC. Po więcej informacji, zobacz [korzystanie z tRPC](usage/trpc#-serverapitrpcts).
+2. Eksportujemy funkcje pomocnicze helperów. Po więcej informacji, zobacz [korzystanie z tRPC](usage/trpc#-serverapitrpcts).
+
+</div>
+
+<div data-components="trpc">
+
+#### `src/server/api/root.ts`
+
+Plik `root.ts` jest używany do scalenia routerów tRPC i eksportowania ich jako pojedynczego routera, a także eksportowania jego definicji typów. Po więcej informacji, zobacz [korzystanie z tRPC](/pl/usage/trpc#-serverapirootts).
+
+</div>
+<div data-components="trpc">
+
+### `src/trpc`
+
+Folder `trpc` zawiera pliki pozwalające na wykonywanie procedur TPRC z komponentow po stronie serwera i klienta
+
+</div>
+<div data-components="trpc">
+
+#### `src/trpc/query-client.ts`
+
+Plik `query-client.ts` tworzy Query Clienta, którego TPRC używa do cache'owania i deduplikacji danych w komponentach po stronie klienta.
+
+</div>
+<div data-components="trpc">
+
+#### `src/trpc/react.tsx`
+
+Plik `react.tsx` jest punktem wejścia dla trpc od strony klienta. Zawiera on też typy dla inputu i outputu rutera. Po więcej inforamcji, zobacz [korzystanie z trpc](usage/trpc#-serverapitrpcts).
+
+</div>
+<div data-components="trpc">
+
+#### `src/trpc/server.ts`
+
+Plik `server.ts` jest punktem wejściowym dla tprc w komponentach po stronie serwera.
+
+</div>
+<div>
+
+### `.env`
+
+Plik `.env` jest używany do przechowywania zmiennych środowiskowych. Po więcej informacji, zobacz [Zmienne Środowiskowe](usage/env-variables). Plik ten **nie** powinien być commitowany do historii gita.
+
+</div>
+<div>
+
+### `.env.example`
+
+Plik `.env.example` pokazuje przykładowe zmienne środowiskowe bazując na wybranych bibliotekach. Plik ten powinien być commitowany do historii gita.
+
+</div>
+<div>
+
+### `.eslintrc.cjs`
+
+Plik `.eslintrc.cjs` jest używany do konfigurowania ESLinta. Po więcej informacji, zobacz [dokumentację ESLinta](https://eslint.org/docs/latest/user-guide/configuring/configuration-files).
+
+</div>
+<div data-components="drizzle">
+
+### `db.sqlite (tylko dla sqlite)`
+
+Plik `db.sqlite` zawiera baze danych do "developmentu". Ten plik jest tworzony po wykonaniu komendy `db:push`, i jest ignorowany przez git.
+
+</div>
+<div data-components="drizzle">
+
+### `drizzle.config.ts`
+
+Plik `drizzle.config.ts` jest używany do konfigurowania Drizzle kit. Po więcej informacji przeczytaj [ich dokumentację](https://orm.drizzle.team/kit-docs/config-reference)
+
+</div>
+<div>
+
+### `next-env.d.ts`
+
+Plik `next-env.d.ts` gwarantuje korzystanie z typów Next.jsa przez kompilator TypeScripta. \*\*Nie powinieneś go usuwać ani modyfikować, ponieważ może on zmienić się w każdym momencie. Po więcej informacji, zobacz [dokumentację Next.js](https://nextjs.org/docs/basic-features/typescript#existing-projects).
+
+</div>
+<div>
+
+### `next.config.mjs`
+
+Plik `next.config.mjs` jest używany do konfigurowania Next.js. Po więcej informacji, zobacz [dokumentację Next.js](https://nextjs.org/docs/api-reference/next.config.js/introduction). Uwaga: Rozszerzenie .mjs pozwala korzystać z importów ESM.
+
+</div>
+<div data-components="tailwind">
+
+### `postcss.config.cjs`
+
+Plik `postcss.config.cjs` jest używany przez Tailwind PostCSS. Po więcej informacji, zobacz [dokumentację Tailwind PostCSS](https://tailwindcss.com/docs/installation/using-postcss).
+
+</div>
+<div data-components="tailwind">
+
+### `prettier.config.mjs`
+
+Plik `prettier.config.mjs` jest używany do konfigurowania Prettiera. Dołącza on plugin `prettier-plugin-tailwindcss` formatujący klasy CSS Tailwinda. Po więcej informacji, zobacz [post na blogu Tailwind CSS](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier).
+
+</div>
+<div data-components="drizzle">
+
+### `start-database.sh (tylko dla mysql lub postgres )`
+
+Plik `start-database.sh` jest używany do uruchomienia bazy danych. Zobacz komentarze w pliku po informacje jak uruchomić baze danych na twoim systemie operacyjnym.
+
+</div>
+<div>
+
+### `tsconfig.json`
+
+Plik `tsconfig.json` jest używany do konfigurowania TypeScripta. Niektóre ustawienia zostały włączone (takie jak `strict mode`), aby zapewnić najlepsze użycie TypeScripta do Create T3 App i jej bibliotek. Po więcej informacji, zobacz [dokumentację TypeScripta](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) albo [korzystanie z TypeScripta](/pl/usage/typescript).
+
+</div>

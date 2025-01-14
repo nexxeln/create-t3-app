@@ -5,9 +5,9 @@ layout: ../../layouts/docs.astro
 lang: pl
 ---
 
-<div class="embed">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/YkOSUVzOAA4" title="The best stack for your next project" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+import { IntroductionTab } from "../../components/docs/introductionTab";
+
+<IntroductionTab client:load />
 
 ## T3 Stack
 
