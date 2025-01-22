@@ -398,6 +398,7 @@ export const SIDEBAR: Sidebar = {
       { text: "Next.js", link: "zh-hans/usage/next-js" },
       { text: "TypeScript", link: "zh-hans/usage/typescript" },
       { text: "tRPC", link: "zh-hans/usage/trpc" },
+      { text: "Drizzle", link: "zh-hans/usage/drizzle" },
       { text: "Prisma", link: "zh-hans/usage/prisma" },
       { text: "NextAuth.js", link: "zh-hans/usage/next-auth" },
       {

@@ -6,8 +6,78 @@ lang: zh-hans
 isMdx: true
 ---
 
-import Callout from "../../../components/docs/callout.tsx";
+Drizzle 是一个无头的 TypeScript ORM，提供 [关系型](https://orm.drizzle.team/docs/rqb) 和 [类 SQL](https://orm.drizzle.team/docs/select) 的查询 API。它可以处理数据库迁移和模式，并提供类型安全的数据库客户端。同时，它还附带 [Drizzle-Kit](https://orm.drizzle.team/drizzle-studio/overview)，一组用于帮助查询数据库的工具。
 
-<Callout type="info">
-  `drizzle` 选项是一个新添加的功能，目前尚未编写文档。欢迎贡献文档!
-</Callout>
+## Drizzle 客户端
+
+Drizzle 客户端位于 `src/server/db/index.ts` 文件中。在此文件中，您可以定义数据库连接 URL，并将数据库模式连接到数据库对象。
+
+```ts:src/server/db/index.ts
+import { env } from "~/env";
+import * as schema from "./schema";
+import postgres from "postgres";
+
+const conn = postgres(env.DATABASE_URL);
+
+export const db = drizzle(conn, { schema });
+```
+
+我们建议将数据库客户端包含在 tRPC 的 Context 中：
+
+```ts:src/server/api/trpc.ts
+import { db } from "~/server/db";
+
+export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const session = await auth();
+
+  return {
+    db,
+    session,
+    ...opts,
+  };
+};
+```
+
+## 模式（Schema）
+
+Drizzle 的模式文件位于 `src/server/db/schema.ts`。此文件是您定义数据库模式和模型的地方，并与 Drizzle 客户端连接。
+
+当您选择使用 NextAuth.js 配合 Prisma 时，模式文件会按照 [Auth.js 文档](https://authjs.dev/getting-started/adapters/drizzle) 中的推荐值，为 `User`、`Session`、`Account` 和 `VerificationToken` 模型自动生成并设置。
+
+## Drizzle Kit
+
+Drizzle Kit 是一组命令行工具，旨在帮助您管理数据库。当您选择 Drizzle 作为 ORM 时，T3 Stack 会自动包含 Drizzle Kit。
+
+```json:package.json
+"scripts": {
+    ...
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    ...
+  },
+```
+
+### 脚本说明
+
+`db:generate`  
+从数据库模式生成 TypeScript 类型和模型，确保类型安全并轻松与 Drizzle ORM 集成。
+
+`db:migrate`  
+将待处理的迁移应用到数据库中，保持模式与项目中的更改和更新同步。
+
+`db:push`  
+将本地模式更改直接推送到数据库，而无需显式的迁移文件。这在开发中快速同步时非常有用。
+
+`db:studio`  
+打开一个可视化界面，用于管理和检查数据库表、数据和关系。
+
+## 实用资源
+
+| 资源                   | 链接                                                |
+| ---------------------- | --------------------------------------------------- |
+| Drizzle 文档           | https://orm.drizzle.team/docs/overview              |
+| Drizzle GitHub         | https://github.com/drizzle-team/drizzle-orm         |
+| Auth.JS Drizzle 适配器 | https://authjs.dev/getting-started/adapters/drizzle |
+| Drizzle Kit 迁移指南   | https://orm.drizzle.team/docs/kit-overview          |
