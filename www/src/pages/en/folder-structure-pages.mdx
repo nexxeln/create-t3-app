@@ -238,6 +238,13 @@ The `prettier.config.mjs` file is used to configure Prettier to include the pret
 The `start-database.sh` file is used to start the database. Please see the comments inside the file for information on how to start the database with your operating system.
 
 </div>
+<div data-components="drizzle">
+
+### `docker-compose.yml (mysql or postgres only)`
+
+The `docker-compose.yml` file is run after `start-database.sh` loads the necessary environment variables. Please see the contents inside for the environment variables that are required. If they are set you can directly run `docker compose up -d`.
+
+</div>
 <div>
 
 ### `tsconfig.json`

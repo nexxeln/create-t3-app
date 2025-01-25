@@ -17,12 +17,6 @@ export const dbContainerInstaller: Installer = ({
   databaseProvider,
   projectName,
 }) => {
-  const scriptSrc = path.join(
-    PKG_ROOT,
-    `template/extras/start-database/${databaseProvider}.sh`
-  );
-  const scriptText = fs.readFileSync(scriptSrc, "utf-8");
-  const scriptDest = path.join(projectDir, "start-database.sh");
   // for configuration with postgresql and mysql when project is created with '.' project name
   const [projectNameParsed] =
     projectName === "." ? parseNameAndPath(projectDir) : [projectName];
@@ -30,9 +24,21 @@ export const dbContainerInstaller: Installer = ({
   // Sanitize the project name for Docker container usage
   const sanitizedProjectName = sanitizeName(projectNameParsed);
 
-  fs.writeFileSync(
-    scriptDest,
-    scriptText.replaceAll("project1", sanitizedProjectName)
+  const dockerFolder = path.join(
+    PKG_ROOT,
+    "template/extras/docker/",
+    databaseProvider
   );
-  fs.chmodSync(scriptDest, "755");
+
+  const files = fs.readdirSync(dockerFolder);
+  for (const file of files) {
+    const scriptSrc = path.join(dockerFolder, file);
+    const scriptDest = path.join(projectDir, file);
+    const scriptText = fs.readFileSync(scriptSrc, "utf-8");
+    fs.writeFileSync(
+      scriptDest,
+      scriptText.replaceAll("project1", sanitizedProjectName)
+    );
+    fs.chmodSync(scriptDest, "755");
+  }
 };

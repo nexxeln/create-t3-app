@@ -1,0 +1,10 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: ${DB_CONTAINER_NAME?}
+    restart: unless-stopped
+    ports:
+      - "${DB_PORT?}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD?}
+      MYSQL_DATABASE: ${DB_NAME?}
