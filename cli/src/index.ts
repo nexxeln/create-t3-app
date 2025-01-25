@@ -14,6 +14,7 @@ import { getUserPkgManager } from "~/utils/getUserPkgManager.js";
 import { logger } from "~/utils/logger.js";
 import { parseNameAndPath } from "~/utils/parseNameAndPath.js";
 import { renderTitle } from "~/utils/renderTitle.js";
+import { formatProject } from "./helpers/format.js";
 import { installDependencies } from "./helpers/installDependencies.js";
 import { getVersion } from "./utils/getT3Version.js";
 import {
@@ -38,7 +39,7 @@ const main = async () => {
   const {
     appName,
     packages,
-    flags: { noGit, noInstall, importAlias, appRouter },
+    flags: { noGit, noInstall, importAlias, appRouter, eslint, biome },
     databaseProvider,
   } = await runCli();
 
@@ -84,6 +85,8 @@ const main = async () => {
   if (!noInstall) {
     await installDependencies({ projectDir });
   }
+
+  await formatProject({ pkgManager, projectDir, eslint, biome });
 
   if (!noGit) {
     await initializeGit(projectDir);

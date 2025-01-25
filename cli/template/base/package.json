@@ -7,9 +7,6 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "check": "next lint && tsc --noEmit",
     "preview": "next build && next start",
     "typecheck": "tsc --noEmit"
   },
@@ -22,14 +19,9 @@
     "zod": "^3.23.3"
   },
   "devDependencies": {
-    "@types/eslint": "^8.56.10",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.1.0",
-    "@typescript-eslint/parser": "^8.1.0",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^15.0.1",
     "typescript": "^5.5.3"
   }
 }

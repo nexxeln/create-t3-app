@@ -1,11 +1,10 @@
 import path from "path";
 import fs from "fs-extra";
-import { type PackageJson } from "type-fest";
 
 import { PKG_ROOT } from "~/consts.js";
 import { type Installer } from "~/installers/index.js";
 import { addPackageDependency } from "~/utils/addPackageDependency.js";
-import { type AvailableDependencies } from "./dependencyVersionMap.js";
+import { addPackageScript } from "~/utils/addPackageScript.js";
 
 export const drizzleInstaller: Installer = ({
   projectDir,
@@ -13,14 +12,9 @@ export const drizzleInstaller: Installer = ({
   scopedAppName,
   databaseProvider,
 }) => {
-  const devPackages: AvailableDependencies[] = [
-    "drizzle-kit",
-    "eslint-plugin-drizzle",
-  ];
-
   addPackageDependency({
     projectDir,
-    dependencies: devPackages,
+    dependencies: ["drizzle-kit"],
     devMode: true,
   });
   addPackageDependency({
@@ -75,24 +69,19 @@ export const drizzleInstaller: Installer = ({
   );
   const clientDest = path.join(projectDir, "src/server/db/index.ts");
 
-  // add db:* scripts to package.json
-  const packageJsonPath = path.join(projectDir, "package.json");
-
-  const packageJsonContent = fs.readJSONSync(packageJsonPath) as PackageJson;
-  packageJsonContent.scripts = {
-    ...packageJsonContent.scripts,
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-  };
+  addPackageScript({
+    projectDir,
+    scripts: {
+      "db:push": "drizzle-kit push",
+      "db:studio": "drizzle-kit studio",
+      "db:generate": "drizzle-kit generate",
+      "db:migrate": "drizzle-kit migrate",
+    },
+  });
 
   fs.copySync(configFile, configDest);
   fs.mkdirSync(path.dirname(schemaDest), { recursive: true });
   fs.writeFileSync(schemaDest, schemaContent);
   fs.writeFileSync(configDest, configContent);
   fs.copySync(clientSrc, clientDest);
-  fs.writeJSONSync(packageJsonPath, packageJsonContent, {
-    spaces: 2,
-  });
 };
