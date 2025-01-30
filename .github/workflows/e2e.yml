@@ -55,11 +55,61 @@ jobs:
       # has to be scaffolded outside the CLI project so that no lint/tsconfig are leaking
       # through. this way it ensures that it is the app's configs that are being used
       # FIXME: this is a bit hacky, would rather have --packages=trpc,tailwind,... but not sure how to setup the matrix for that
-      - run: cd cli && pnpm start ../../ci-${{ matrix.trpc }}-${{ matrix.tailwind }}-${{ matrix.nextAuth }}-${{ matrix.prisma }}-${{ matrix.drizzle}}-${{ matrix.appRouter }}-${{ matrix.dbType }} --noGit --CI --trpc=${{ matrix.trpc }} --tailwind=${{ matrix.tailwind }} --nextAuth=${{ matrix.nextAuth }} --prisma=${{ matrix.prisma }} --drizzle=${{ matrix.drizzle }} --appRouter=${{ matrix.appRouter }} --dbProvider=${{ matrix.dbType }}
+      - run: cd cli && pnpm start ../../ci-${{ matrix.trpc }}-${{ matrix.tailwind }}-${{ matrix.nextAuth }}-${{ matrix.prisma }}-${{ matrix.drizzle}}-${{ matrix.appRouter }}-${{ matrix.dbType }} --noGit --CI --trpc=${{ matrix.trpc }} --tailwind=${{ matrix.tailwind }} --nextAuth=${{ matrix.nextAuth }} --prisma=${{ matrix.prisma }} --drizzle=${{ matrix.drizzle }} --appRouter=${{ matrix.appRouter }} --dbProvider=${{ matrix.dbType }} --eslint
         if: ${{ steps.matrix-valid.outputs.continue == 'true' }}
         # can't use default mysql string cause t3-env blocks that
+
       - run: cd ../ci-${{ matrix.trpc }}-${{ matrix.tailwind }}-${{ matrix.nextAuth }}-${{ matrix.prisma }}-${{ matrix.drizzle}}-${{ matrix.appRouter }}-${{ matrix.dbType }} && pnpm build
         if: ${{ steps.matrix-valid.outputs.continue == 'true' }}
+        env:
+          AUTH_SECRET: foo
+          AUTH_DISCORD_ID: bar
+          AUTH_DISCORD_SECRET: baz
+          SKIP_ENV_VALIDATION: true
+
+  check-well-formatted:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        eslint: ["true", "false"]
+        biome: ["true", "false"]
+
+    name: "Build and Start T3 App"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check valid matrix
+        id: matrix-valid
+        run: |
+          echo "continue=${{ (matrix.eslint == 'false' || matrix.biome == 'false') && (matrix.biome == 'true' || matrix.eslint == 'true') }}" >> $GITHUB_OUTPUT
+
+      - uses: ./.github/actions/setup
+        if: ${{ steps.matrix-valid.outputs.continue == 'true' }}
+
+      - run: pnpm turbo --filter=create-t3-app build
+        if: ${{ steps.matrix-valid.outputs.continue == 'true' }}
+
+      - run: cd cli && pnpm start ../../ci-format-${{ matrix.eslint }}-${{ matrix.biome }} --noGit --CI --trpc --tailwind --nextAuth  --drizzle --appRouter --dbProvider=postgres --eslint=${{ matrix.eslint }} --biome=${{ matrix.biome }}
+        if: ${{ steps.matrix-valid.outputs.continue == 'true' }}
+
+      - run: cd ../ci-format-${{ matrix.eslint }}-${{ matrix.biome }} && pnpm build
+        if: ${{ steps.matrix-valid.outputs.continue == 'true' }}
+        env:
+          AUTH_SECRET: foo
+          AUTH_DISCORD_ID: bar
+          AUTH_DISCORD_SECRET: baz
+          SKIP_ENV_VALIDATION: true
+
+      # Run biome check
+      - run: cd ../ci-format-${{ matrix.eslint }}-${{ matrix.biome }} && pnpm check
+        if: ${{ steps.matrix-valid.outputs.continue == 'true' && matrix.biome == 'true' }}
+
+      # Check linting and formatting with eslint and prettier
+      - run: cd ../ci-format-${{ matrix.eslint }}-${{ matrix.biome }} && pnpm lint && pnpm format:check
+        if: ${{ steps.matrix-valid.outputs.continue == 'true' && matrix.eslint == 'true' }}
         env:
           AUTH_SECRET: foo
           AUTH_DISCORD_ID: bar
@@ -89,7 +139,7 @@ jobs:
 
       - name: We should have a Bun lockfile
         run: |
-          if [ ! -f "../ci-bun/bun.lockb" ]; then
+          if [ ! -f "../ci-bun/bun.lock" ]; then
             echo "Bun lockfile not found"
             exit 1
           fi

@@ -4,6 +4,7 @@ import { prismaInstaller } from "~/installers/prisma.js";
 import { tailwindInstaller } from "~/installers/tailwind.js";
 import { trpcInstaller } from "~/installers/trpc.js";
 import { type PackageManager } from "~/utils/getUserPkgManager.js";
+import { biomeInstaller } from "./biome.js";
 import { dbContainerInstaller } from "./dbContainer.js";
 import { drizzleInstaller } from "./drizzle.js";
 import { dynamicEslintInstaller } from "./eslint.js";
@@ -18,6 +19,7 @@ export const availablePackages = [
   "trpc",
   "envVariables",
   "eslint",
+  "biome",
   "dbContainer",
 ] as const;
 export type AvailablePackages = (typeof availablePackages)[number];
@@ -83,7 +85,11 @@ export const buildPkgInstallerMap = (
     installer: envVariablesInstaller,
   },
   eslint: {
-    inUse: true,
+    inUse: packages.includes("eslint"),
     installer: dynamicEslintInstaller,
+  },
+  biome: {
+    inUse: packages.includes("biome"),
+    installer: biomeInstaller,
   },
 });
