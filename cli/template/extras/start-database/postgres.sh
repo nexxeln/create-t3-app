@@ -3,7 +3,9 @@
 
 # TO RUN ON WINDOWS:
 # 1. Install WSL (Windows Subsystem for Linux) - https://learn.microsoft.com/en-us/windows/wsl/install
-# 2. Install Docker Desktop for Windows - https://docs.docker.com/docker-for-windows/install/
+# 2. Install Docker Desktop or Podman Deskop
+# - Docker Desktop for Windows - https://docs.docker.com/docker-for-windows/install/
+# - Podman Desktop - https://podman.io/getting-started/installation
 # 3. Open WSL - `wsl`
 # 4. Run this script - `./start-database.sh`
 
@@ -18,23 +20,30 @@ DB_PORT=$(echo "$DATABASE_URL" | awk -F':' '{print $4}' | awk -F'\/' '{print $1}
 DB_NAME=$(echo "$DATABASE_URL" | awk -F'/' '{print $4}')
 DB_CONTAINER_NAME="$DB_NAME-postgres"
 
-if ! [ -x "$(command -v docker)" ]; then
-  echo -e "Docker is not installed. Please install docker and try again.\nDocker install guide: https://docs.docker.com/engine/install/"
+if ! [ -x "$(command -v docker)" ] && ! [ -x "$(command -v podman)" ]; then
+  echo -e "Docker or Podman is not installed. Please install docker or podman and try again.\nDocker install guide: https://docs.docker.com/engine/install/\nPodman install guide: https://podman.io/getting-started/installation"
   exit 1
 fi
 
-if ! docker info > /dev/null 2>&1; then
-  echo "Docker daemon is not running. Please start Docker and try again."
+# determine which docker command to use
+if [ -x "$(command -v docker)" ]; then
+  DOCKER_CMD="docker"
+elif [ -x "$(command -v podman)" ]; then
+  DOCKER_CMD="podman"
+fi
+
+if ! $DOCKER_CMD info > /dev/null 2>&1; then
+  echo "$DOCKER_CMD daemon is not running. Please start $DOCKER_CMD and try again."
   exit 1
 fi
 
-if [ "$(docker ps -q -f name=$DB_CONTAINER_NAME)" ]; then
+if [ "$($DOCKER_CMD ps -q -f name=$DB_CONTAINER_NAME)" ]; then
   echo "Database container '$DB_CONTAINER_NAME' already running"
   exit 0
 fi
 
-if [ "$(docker ps -q -a -f name=$DB_CONTAINER_NAME)" ]; then
-  docker start "$DB_CONTAINER_NAME"
+if [ "$($DOCKER_CMD ps -q -a -f name=$DB_CONTAINER_NAME)" ]; then
+  $DOCKER_CMD start "$DB_CONTAINER_NAME"
   echo "Existing database container '$DB_CONTAINER_NAME' started"
   exit 0
 fi
@@ -51,7 +60,7 @@ if [ "$DB_PASSWORD" = "password" ]; then
   sed -i -e "s#:password@#:$DB_PASSWORD@#" .env
 fi
 
-docker run -d \
+$DOCKER_CMD run -d \
   --name $DB_CONTAINER_NAME \
   -e POSTGRES_USER="postgres" \
   -e POSTGRES_PASSWORD="$DB_PASSWORD" \
