@@ -10,7 +10,7 @@ const { path, isBlog } = Astro.props;
 
 <footer class="mt-auto flex flex-col bg-transparent py-12 transition-colors">
   {isBlog && <AvatarList path={path} />}
-  <div class="container mx-auto divide-gray-400 divide-opacity-50 px-6 pt-6">
+  <div class="divide-opacity-50 container mx-auto divide-gray-400 px-6 pt-6">
     <div class="flex w-full flex-col items-center justify-between">
       <div class="pb-2">
         <a

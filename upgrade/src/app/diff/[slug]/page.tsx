@@ -126,11 +126,11 @@ export default async function Page({
       </div>
 
       <div className="w-full max-w-7xl">
-        <div className="inline-flex h-12 w-full items-center justify-center rounded bg-muted p-1 text-muted-foreground">
+        <div className="bg-muted text-muted-foreground inline-flex h-12 w-full items-center justify-center rounded p-1">
           <Link
             href={`/diff/${params.slug}?viewType=split`}
             className={cn(
-              "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-10 py-2 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+              "ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center rounded-sm px-10 py-2 text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
               viewType === "split" && "bg-background text-foreground shadow-sm",
             )}
           >
@@ -139,7 +139,7 @@ export default async function Page({
           <Link
             href={`/diff/${params.slug}?viewType=unified`}
             className={cn(
-              "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-10 py-2 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background",
+              "ring-offset-background focus-visible:ring-ring data-[state=active]:bg-background inline-flex items-center justify-center rounded-sm px-10 py-2 text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
               viewType === "unified" &&
                 "bg-background text-foreground shadow-sm",
             )}
@@ -155,7 +155,7 @@ export default async function Page({
               )
             }
             className={cn(
-              "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-4 py-2 text-sm font-medium ring-offset-background transition-all hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background",
+              "ring-offset-background hover:text-foreground focus-visible:ring-ring data-[state=active]:bg-background inline-flex items-center justify-center rounded-sm px-4 py-2 text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
             )}
           >
             View on Github

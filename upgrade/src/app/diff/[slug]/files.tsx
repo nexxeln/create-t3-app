@@ -27,7 +27,7 @@ export function Files(props: { diffText: string; viewType: ViewType }) {
       {files.map((file, index) => (
         <div
           key={`${file.newPath}-${index}`}
-          className="rounded bg-muted shadow-lg"
+          className="bg-muted rounded shadow-lg"
         >
           <FileComponent
             viewType={props.viewType}

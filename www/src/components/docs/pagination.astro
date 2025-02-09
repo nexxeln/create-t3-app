@@ -20,13 +20,13 @@ const isRtl = getIsRtlFromUrl(pathname);
 ---
 
 <div
-  class="mb-8 mt-16 flex flex-row items-center justify-between px-4 pt-4 font-medium text-t3-purple-800 lg:px-8 dark:text-t3-purple-200"
+  class="text-t3-purple-800 dark:text-t3-purple-200 mt-16 mb-8 flex flex-row items-center justify-between px-4 pt-4 font-medium lg:px-8"
 >
   <div>
     {
       prev ? (
         <a
-          class="flex items-center underline-offset-2 hover:text-t3-purple-400 hover:underline dark:hover:text-t3-purple-100"
+          class="hover:text-t3-purple-400 dark:hover:text-t3-purple-100 flex items-center underline-offset-2 hover:underline"
           rel="prev"
           href={Astro.site?.pathname + prev.link}
         >
@@ -43,7 +43,7 @@ const isRtl = getIsRtlFromUrl(pathname);
       next ? (
         <a
           rel="next"
-          class="flex items-center underline-offset-2 hover:text-t3-purple-400 hover:underline dark:hover:text-t3-purple-100"
+          class="hover:text-t3-purple-400 dark:hover:text-t3-purple-100 flex items-center underline-offset-2 hover:underline"
           href={Astro.site?.pathname + next.link}
         >
           <>
@@ -56,4 +56,4 @@ const isRtl = getIsRtlFromUrl(pathname);
   </div>
 </div>
 
-<hr class="border-t-2 border-t3-purple-300/20" />
+<hr class="border-t3-purple-300/20 border-t-2" />

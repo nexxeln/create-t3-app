@@ -18,7 +18,7 @@ const {
 ---
 
 <article
-  class="flex flex-wrap items-start rounded-lg border border-t3-purple-200/20 bg-white/10 bg-cover px-4 pb-1 pt-4 transition-colors hover:border-t3-purple-300/50 hover:bg-white/20 hover:no-underline"
+  class="border-t3-purple-200/20 hover:border-t3-purple-300/50 flex flex-wrap items-start rounded-lg border bg-white/10 bg-cover px-4 pt-4 pb-1 transition-colors hover:bg-white/20 hover:no-underline"
 >
   <Image
     src={avatar}
@@ -61,7 +61,7 @@ const {
           href={`https://twitter.com/${handle}`}
           target="_blank"
           rel="noopener noreferrer"
-          class="mr-1 whitespace-nowrap text-sm text-t3-purple-100 hover:text-[#1da1f2] lg:text-sm"
+          class="text-t3-purple-100 mr-1 text-sm whitespace-nowrap hover:text-[#1da1f2] lg:text-sm"
         >
           @{handle}
         </a>
@@ -71,17 +71,17 @@ const {
       href={`https://twitter.com/${handle}/status/${id}`}
       target="_blank"
       rel="noopener noreferrer"
-      class="whitespace-nowrap text-sm text-t3-purple-100 hover:text-[#1da1f2] lg:text-sm"
+      class="text-t3-purple-100 text-sm whitespace-nowrap hover:text-[#1da1f2] lg:text-sm"
     >
       {date.toDateString()}
     </a>
   </div>
   <div class="w-full">
-    <p class="my-1 whitespace-pre-line text-sm xl:text-base">{text}</p>
+    <p class="my-1 text-sm whitespace-pre-line xl:text-base">{text}</p>
 
     <div class="flex items-center justify-start py-2">
       <div
-        class="mr-8 flex items-center text-t3-purple-100 hover:text-blue-500"
+        class="text-t3-purple-100 mr-8 flex items-center hover:text-blue-500"
       >
         <a
           aria-label={`Comment on ${author.split(" (")[0]}'s Tweet`}
@@ -101,7 +101,7 @@ const {
         <span class="ml-1">{replies}</span>
       </div>
       <div
-        class="mr-8 flex items-center text-t3-purple-100 hover:text-green-500"
+        class="text-t3-purple-100 mr-8 flex items-center hover:text-green-500"
       >
         <a
           aria-label={`Retweet ${author.split(" (")[0]}'s Tweet`}
@@ -120,7 +120,7 @@ const {
         </a>
         <span class="ml-1">{retweets}</span>
       </div>
-      <div class="mr-6 flex items-center text-t3-purple-100 hover:text-red-500">
+      <div class="text-t3-purple-100 mr-6 flex items-center hover:text-red-500">
         <a
           aria-label={`Like ${author.split(" (")[0]}'s Tweet`}
           href={`https://twitter.com/intent/like?tweet_id=${id}`}

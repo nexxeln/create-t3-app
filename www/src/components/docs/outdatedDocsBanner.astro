@@ -51,7 +51,7 @@ Astro.response.headers.set("Cache-Control", `s-max-age=${ONE_WEEK}`);
   diffInDays > 0 && (
     <div
       dir="ltr"
-      class="mx-4 mb-6 rounded-lg bg-t3-purple-200/50 p-4 font-medium lg:mx-0 lg:ml-4 dark:bg-t3-purple-200/10"
+      class="bg-t3-purple-200/50 dark:bg-t3-purple-200/10 mx-4 mb-6 rounded-lg p-4 font-medium lg:mx-0 lg:ml-4"
     >
       <p>
         Attention: This page is{" "}
@@ -64,7 +64,7 @@ Astro.response.headers.set("Cache-Control", `s-max-age=${ONE_WEEK}`);
       </p>
       <p class="mt-3">
         You can also
-        <a class="inline-block text-t3-purple-400" href={engHref}>
+        <a class="text-t3-purple-400 inline-block" href={engHref}>
           view the English version
         </a>
         of this page.

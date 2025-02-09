@@ -35,7 +35,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.variable,
-          "min-h-screen bg-gradient-to-b from-background to-muted font-sans",
+          "from-background to-muted min-h-screen bg-gradient-to-b font-sans",
         )}
       >
         <div className="container mx-auto">
@@ -43,7 +43,7 @@ export default function RootLayout({
           <footer className="flex justify-center pb-4">
             <a
               href="https://github.com/t3-oss/create-t3-app/tree/main/upgrade"
-              className="flex items-center gap-2 text-sm text-muted-foreground"
+              className="text-muted-foreground flex items-center gap-2 text-sm"
             >
               <Github className="h-8 w-8" /> Open Source by Andrei Filip on
               GitHub

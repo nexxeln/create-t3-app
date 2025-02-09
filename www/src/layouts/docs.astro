@@ -68,11 +68,11 @@ const githubEditUrl = `${CONFIG.GITHUB_EDIT_URL}/${currentFile}`;
   </head>
 
   <body
-    class="flex min-h-screen flex-col items-center bg-default transition-colors duration-300"
+    class="bg-default flex min-h-screen flex-col items-center transition-colors duration-300"
   >
     <JumpToContent />
     <div
-      class="sticky top-0 z-40 max-h-full w-full bg-default transition-colors duration-300"
+      class="bg-default sticky top-0 z-40 max-h-full w-full transition-colors duration-300"
     >
       <Navbar />
     </div>
@@ -82,7 +82,7 @@ const githubEditUrl = `${CONFIG.GITHUB_EDIT_URL}/${currentFile}`;
       <nav
         id="grid-left"
         title="Site Navigation"
-        class="t3-scrollbar sticky top-20 col-span-1 hidden h-auto max-h-[calc(100vh-80px)] w-full flex-col justify-start overflow-y-auto bg-default pt-4 transition-colors duration-300 md:top-24 md:flex md:max-h-[calc(100vh-96px)] md:pt-0 md:[margin-inline-start:16px]"
+        class="t3-scrollbar bg-default sticky top-20 col-span-1 hidden h-auto max-h-[calc(100vh-80px)] w-full flex-col justify-start overflow-y-auto pt-4 transition-colors duration-300 md:top-24 md:[margin-inline-start:16px] md:flex md:max-h-[calc(100vh-96px)] md:pt-0"
       >
         <LeftSidebar frontmatter={frontmatter} currentPage={currentPage} />
       </nav>

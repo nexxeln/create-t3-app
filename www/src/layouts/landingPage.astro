@@ -51,7 +51,7 @@ const { isNotFound } = Astro.props;
     >
       <Navbar isNotFound={isNotFound || false} />
       <aside id="grid-left" class="hidden" title="Site Navigation">
-        <div class="fixed left-0 top-0 z-30 h-screen w-screen bg-default">
+        <div class="bg-default fixed top-0 left-0 z-30 h-screen w-screen">
           <div class="fixed top-24 h-[calc(100%-96px)] w-full pb-16">
             <LeftSidebar
               currentPage={currentPage}

@@ -29,7 +29,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       return (
         <Component
           href={href!}
-          className="underline decoration-primary decoration-2 underline-offset-4"
+          className="decoration-primary underline decoration-2 underline-offset-4"
         >
           {children}
         </Component>
@@ -37,13 +37,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     },
     code: (props) => (
       <code
-        className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-muted-foreground"
+        className="bg-muted text-muted-foreground relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold"
         {...props}
       />
     ),
     pre: ({ children, ...rest }) => (
       <pre
-        className="relative my-4 overflow-x-auto rounded border bg-muted p-4 font-mono text-sm font-semibold text-muted-foreground"
+        className="bg-muted text-muted-foreground relative my-4 overflow-x-auto rounded border p-4 font-mono text-sm font-semibold"
         {...rest}
       >
         {children}

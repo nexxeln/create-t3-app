@@ -21,7 +21,7 @@ const { tweets } = Astro.props as Props;
   </div>
 
   {/* Pagination */}
-  <div class="mb-10 mt-6 flex justify-center">
+  <div class="mt-6 mb-10 flex justify-center">
     {
       tweets.map((_, idx) => (
         // Larger click area while keeping the visual circles small
@@ -32,7 +32,7 @@ const { tweets } = Astro.props as Props;
         >
           <div
             class:list={[
-              "aspect-square h-2 rounded-full bg-white/20 transition-colors ease-in-out [&.active]:bg-primary [&:not(.active)]:hover:bg-white/40",
+              "[&.active]:bg-primary aspect-square h-2 rounded-full bg-white/20 transition-colors ease-in-out [&:not(.active)]:hover:bg-white/40",
               {
                 active: idx === 0,
               },

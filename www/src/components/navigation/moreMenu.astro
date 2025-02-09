@@ -17,14 +17,14 @@ const isLangEN = getLanguageFromURL(pathname) === "en";
   class="flex w-full flex-col pt-8 text-center md:text-start lg:py-0"
 >
   <h2
-    class="mb-4 hidden text-lg font-semibold text-slate-900 md:block dark:text-t3-purple-50"
+    class="dark:text-t3-purple-50 mb-4 hidden text-lg font-semibold text-slate-900 md:block"
   >
     More
   </h2>
 
   <ul class="flex flex-col items-center gap-2 text-sm md:items-start">
     <li
-      class="hidden text-t3-purple-800 hover:text-t3-purple-400 md:block dark:text-t3-purple-200 dark:hover:text-t3-purple-100"
+      class="text-t3-purple-800 hover:text-t3-purple-400 dark:text-t3-purple-200 dark:hover:text-t3-purple-100 hidden md:block"
     >
       <a
         class="flex items-center gap-2"
@@ -57,7 +57,7 @@ const isLangEN = getLanguageFromURL(pathname) === "en";
 
     <li
       class:list={[
-        "hidden text-t3-purple-800 hover:text-t3-purple-400 dark:text-t3-purple-200 dark:hover:text-t3-purple-100",
+        "text-t3-purple-800 hover:text-t3-purple-400 dark:text-t3-purple-200 dark:hover:text-t3-purple-100 hidden",
         isLangEN && "md:block",
       ]}
     >

@@ -75,12 +75,12 @@ export default function OnThisPageLinks({
   }, [headings, title]);
 
   return (
-    <div className="sticky inset-x-0 top-[72px] z-[11] block w-full bg-default px-4 pb-4 pt-2 lg:hidden">
+    <div className="bg-default sticky inset-x-0 top-[72px] z-[11] block w-full px-4 pt-2 pb-4 lg:hidden">
       <Menu>
         {({ open }) => (
           <div className="relative w-full">
             <div className="">
-              <Menu.Button className="text-md inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border-2 bg-t3-purple-200/50 px-3 py-2 font-medium hover:bg-t3-purple-200/75 dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50">
+              <Menu.Button className="text-md bg-t3-purple-200/50 hover:bg-t3-purple-200/75 dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50 inline-flex cursor-pointer items-center gap-1.5 rounded-md border-2 px-3 py-2 font-medium whitespace-nowrap">
                 On this page
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,7 @@ export default function OnThisPageLinks({
             </div>
             <Menu.Items
               dir="ltr"
-              className="t3-scrollbar absolute top-full z-10 mt-3 max-h-[45vh] w-full overflow-y-auto rounded-md border-2 border-primary bg-default py-1.5 shadow-md dark:border-t3-purple-200/20 dark:bg-default"
+              className="t3-scrollbar border-primary bg-default dark:border-t3-purple-200/20 dark:bg-default absolute top-full z-10 mt-3 max-h-[45vh] w-full overflow-y-auto rounded-md border-2 py-1.5 shadow-md"
             >
               <ul dir={isLtr ? "ltr" : "rtl"}>
                 {headingWithIsVisible.map((heading) => (
@@ -116,13 +116,13 @@ export default function OnThisPageLinks({
                       {({ active }) => (
                         <a
                           className={clsx(
-                            "text-md line-clamp-1 block w-full py-2 text-t3-purple-800 transition-colors hover:bg-t3-purple-300/20 hover:text-t3-purple-400 dark:text-t3-purple-200 dark:hover:bg-t3-purple-300/10 dark:hover:text-t3-purple-50",
+                            "text-md text-t3-purple-800 hover:bg-t3-purple-300/20 hover:text-t3-purple-400 dark:text-t3-purple-200 dark:hover:bg-t3-purple-300/10 dark:hover:text-t3-purple-50 line-clamp-1 block w-full py-2 transition-colors",
                             isLtr && (heading.depth === 2 ? "pl-3" : "pl-8"),
                             isRtl && (heading.depth === 2 ? "pr-3" : "pr-8"),
                             {
-                              "bg-t3-purple-300/20 text-t3-purple-400 underline dark:bg-t3-purple-300/10 dark:text-t3-purple-100":
+                              "bg-t3-purple-300/20 text-t3-purple-400 dark:bg-t3-purple-300/10 dark:text-t3-purple-100 underline":
                                 active,
-                              "bg-t3-purple-300/30 font-medium text-t3-purple-700 underline dark:bg-t3-purple-300/20 dark:text-t3-purple-100":
+                              "bg-t3-purple-300/30 text-t3-purple-700 dark:bg-t3-purple-300/20 dark:text-t3-purple-100 font-medium underline":
                                 heading.isVisible,
                             },
                           )}

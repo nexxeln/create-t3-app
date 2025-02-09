@@ -19,12 +19,12 @@ const isRtl = getIsRtlFromUrl(pathname);
 
 <div dir={isRtl ? "rtl" : "ltr"}>
   <h2
-    class="mb-4 text-lg font-semibold text-slate-900 dark:text-t3-purple-50"
+    class="dark:text-t3-purple-50 mb-4 text-lg font-semibold text-slate-900"
     id="toc-heading"
   >
     On this page
   </h2>
-  <ul class="mb-4 w-full list-none marker:text-t3-purple-300">
+  <ul class="marker:text-t3-purple-300 mb-4 w-full list-none">
     {
       headings.map((heading) => {
         const { depth, slug, text } = heading;
@@ -54,7 +54,7 @@ const isRtl = getIsRtlFromUrl(pathname);
           <li
             data-components={dataComponentType || null}
             class:list={[
-              "w-full list-none border-t3-purple-300/20 p-1 text-sm transition-colors duration-300 hover:border-t3-purple-300/50",
+              "border-t3-purple-300/20 hover:border-t3-purple-300/50 w-full list-none p-1 text-sm transition-colors duration-300",
               isRtl
                 ? ["border-r-2", depth === 2 ? "pr-2" : "pr-4"]
                 : ["border-l-2", depth === 2 ? "pl-2" : "pl-4"],

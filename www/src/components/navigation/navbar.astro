@@ -73,11 +73,11 @@ const navbarLinks: Array<{ href: string; label: string }> = [
               class:list={[
                 "relative inline-flex items-center rounded-md border border-transparent px-3 py-2 transition-colors hover:no-underline",
                 {
-                  "border bg-t3-purple-200/50 text-t3-purple-800 dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50":
+                  "bg-t3-purple-200/50 text-t3-purple-800 dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50 border":
                     navbarLink.href === currentPage,
-                  "rounded-lg text-t3-purple-100 hover:bg-t3-purple-200/10 hover:text-t3-purple-300":
+                  "text-t3-purple-100 hover:bg-t3-purple-200/10 hover:text-t3-purple-300 rounded-lg":
                     isLanding,
-                  "rounded-lg text-t3-purple-800 hover:bg-t3-purple-200/50 hover:text-t3-purple-800 dark:text-t3-purple-100 dark:hover:bg-t3-purple-200/10 dark:hover:text-t3-purple-300":
+                  "text-t3-purple-800 hover:bg-t3-purple-200/50 hover:text-t3-purple-800 dark:text-t3-purple-100 dark:hover:bg-t3-purple-200/10 dark:hover:text-t3-purple-300 rounded-lg":
                     !isLanding,
                 },
               ]}

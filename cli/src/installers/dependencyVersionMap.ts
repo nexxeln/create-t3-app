@@ -23,10 +23,11 @@ export const dependencyVersionMap = {
   "@libsql/client": "^0.9.0",
 
   // TailwindCSS
-  tailwindcss: "^3.4.3",
+  tailwindcss: "^4.0.0",
   postcss: "^8.4.39",
   prettier: "^3.3.2",
-  "prettier-plugin-tailwindcss": "^0.6.5",
+  "prettier-plugin-tailwindcss": "^0.6.11",
+  "@tailwindcss/postcss": "^4.0.0",
 
   // tRPC
   "@trpc/client": "^11.0.0-rc.446",

@@ -59,9 +59,9 @@ export default function Search({ isLanding }: { isLanding: boolean }) {
         className={clsx(
           "flex w-full cursor-text items-center justify-between rounded-lg px-4 py-2 text-sm font-medium text-slate-800 !transition-colors !duration-300 dark:text-slate-100",
           {
-            "hover:bg-t3-purple/20 border border-t3-purple-200/20 bg-t3-purple-200/10 duration-300 hover:border-t3-purple-200/50":
+            "hover:bg-t3-purple/20 border-t3-purple-200/20 bg-t3-purple-200/10 hover:border-t3-purple-200/50 border duration-300":
               isLanding,
-            "dark:hover:bg-t3-purple/20 border bg-t3-purple-200/50 duration-300 hover:bg-t3-purple-200/75 dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:text-slate-100 dark:hover:border-t3-purple-200/50":
+            "dark:hover:bg-t3-purple/20 bg-t3-purple-200/50 hover:bg-t3-purple-200/75 dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50 border duration-300 dark:text-slate-100":
               !isLanding,
           },
         )}

@@ -69,7 +69,7 @@ export default function BreadCrumbs() {
     <div className="flex items-center gap-2 px-4 text-sm">
       <a
         href="/"
-        className="rounded-lg border bg-t3-purple-200/50 p-1 hover:bg-t3-purple-200/75 hover:no-underline dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50"
+        className="bg-t3-purple-200/50 hover:bg-t3-purple-200/75 dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50 rounded-lg border p-1 hover:no-underline"
       >
         <svg width="20" height="20" viewBox="0 0 24 24">
           <path
@@ -85,7 +85,7 @@ export default function BreadCrumbs() {
         <div className="flex items-center gap-2" key={crumb.key}>
           <a
             href={crumb.href}
-            className="rounded-lg border bg-t3-purple-200/50 p-1 hover:bg-t3-purple-200/75 hover:no-underline dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50"
+            className="bg-t3-purple-200/50 hover:bg-t3-purple-200/75 dark:border-t3-purple-200/20 dark:bg-t3-purple-200/10 dark:hover:border-t3-purple-200/50 rounded-lg border p-1 hover:no-underline"
           >
             {crumb.text}
           </a>
